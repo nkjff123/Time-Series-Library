@@ -18,7 +18,7 @@ class Exp_Imputation(Exp_Basic):
         super(Exp_Imputation, self).__init__(args)
 
     def _build_model(self):
-        model = self.model_dict[self.args.model].Model(self.args).float()
+        model = self.model_dict[self.args.model](self.args).float()
 
         if self.args.use_multi_gpu and self.args.use_gpu:
             model = nn.DataParallel(model, device_ids=self.args.device_ids)
@@ -65,12 +65,12 @@ class Exp_Imputation(Exp_Basic):
                 batch_x = batch_x[:, :, f_dim:]
                 mask = mask[:, :, f_dim:]
 
-                pred = outputs.detach().cpu()
-                true = batch_x.detach().cpu()
-                mask = mask.detach().cpu()
+                pred = outputs.detach()
+                true = batch_x.detach()
+                mask = mask.detach()
 
                 loss = criterion(pred[mask == 0], true[mask == 0])
-                total_loss.append(loss)
+                total_loss.append(loss.item())
         total_loss = np.average(total_loss)
         self.model.train()
         return total_loss

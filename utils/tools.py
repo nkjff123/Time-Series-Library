@@ -36,7 +36,7 @@ class EarlyStopping:
         self.counter = 0
         self.best_score = None
         self.early_stop = False
-        self.val_loss_min = np.Inf
+        self.val_loss_min = np.inf
         self.delta = delta
 
     def __call__(self, val_loss, model, path):
@@ -97,7 +97,7 @@ def adjustment(gt, pred):
     for i in range(len(gt)):
         if gt[i] == 1 and pred[i] == 1 and not anomaly_state:
             anomaly_state = True
-            for j in range(i, 0, -1):
+            for j in range(i, -1, -1):
                 if gt[j] == 0:
                     break
                 else:
