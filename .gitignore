@@ -166,3 +166,8 @@ result_anomaly_detection.txt
 scripts/augmentation/
 run_anylearn.py
 environment.txt
+
+#aimemory
+/memory-bank/
+# 忽略所有包含 custom 的脚本文件
+scripts/**/*custom*.sh
